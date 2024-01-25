@@ -472,7 +472,7 @@ class Trainer(ColumnMappingMixin):
         self, x: List[str], y: Union[List[int], List[List[int]]], args: TrainingArguments, max_pairs: int = -1
     ) -> Tuple[DataLoader, nn.Module, int, int]:
         # sentence-transformers adaptation
-        input_data = [InputExample(texts=[text], label=label) for text, label in zip(x, y)]
+        input_data = [InputExample(texts=text if isinstance(text, list) else [text], label=label) for text, label in zip(x, y)]
 
         if args.loss in [
             losses.BatchAllTripletLoss,

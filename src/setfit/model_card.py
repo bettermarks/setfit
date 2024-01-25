@@ -309,7 +309,10 @@ class SetFitModelCardData(CardData):
 
     def set_train_set_metrics(self, dataset: Dataset) -> None:
         def add_naive_word_count(sample: Dict[str, Any]) -> Dict[str, Any]:
-            sample["word_count"] = len(sample["text"].split(" "))
+            if isinstance(sample["text"], list):
+                sample["word_count"] = len(" ".join(sample["text"]).split(" "))
+            else:
+                sample["word_count"] = len(sample["text"].split(" "))
             return sample
 
         dataset = dataset.map(add_naive_word_count)

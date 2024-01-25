@@ -57,7 +57,7 @@ class ContrastiveDataset(IterableDataset):
         self.neg_index = 0
         self.pos_pairs = []
         self.neg_pairs = []
-        self.sentences = np.array([s.texts[0] for s in examples])
+        self.sentences = np.array([s.texts[0] if len(s.texts) == 1 else s.texts for s in examples])
         self.labels = np.array([s.label for s in examples])
         self.sentence_labels = list(zip(self.sentences, self.labels))
         self.max_pairs = max_pairs
